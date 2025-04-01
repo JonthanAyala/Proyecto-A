@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Page AGJD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <div class="col-6 mt-5">
+                    <h1>Bienvenido a mi One Page</h1>
+                    <br>
+                    <p>Este sitio carga tarjetas dinamicamente</p>
+                    <br>
+                </div>
+                <div class="col-6 mt-5">
+                    <img 
+                    src="https://culturageek.com.ar/wp-content/uploads/2025/01/472060855_2608709879519266_195699421358886321_n.webp" 
+                    alt="img" class="img-fluid">
+                </div>
+            </div>
+            <div class="row mt-5" id="tarjetas">
+                <div class="card col-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Este es un titulo 
+                        </h5>
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui ipsa dolor doloribus labore porro et mollitia totam aut in natus ullam atque perferendis odio expedita, vel, similique nesciunt enim dignissimos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function loadCards(title, text){
+            var card = document.createElement('div');
+            card.setAttribute('class','card col-4');
+            
+            var body = document.createElement('div');
+            body.setAttribute('class', 'card-doby');
+
+            var h5 = document.createElement('h5');
+            h5.setAttribute('class', 'card-title');
+            h5.innerHTML = title;
+
+            var p = document.createElement('p');
+            p.setAttribute('class', 'card-text');
+            p.innerHTML =text;
+
+            body.appendChild(h5);
+            body.appendChild(p);
+            card.appendChild(body);
+            
+            document.getElementById('tarjetas').appendChild(card);
+        }
+        var i =1;
+
+        window.addEventListener('scroll', () =>{
+            if( window.innerHeight + window.scrollY >= document.body.offsetHeight-10 || document.body.offsetHeight <= window.innerHeight ){
+                for(let index = 0; index < 5 ; index++ ){
+                    if(i>100){break}
+                    var object = {
+                        title: 'Titulo dinamico de Card: '+ i,
+                        text: 'Texto dinamico de Card ' + i
+                    };
+                    loadCards(object.title, object.text);
+                    i++
+                }
+            }
+        })
+    </script>
+</body>
+</html>

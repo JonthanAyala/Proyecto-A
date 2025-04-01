@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-6">
+        <h1>Nueva Categoria</h1>
+        <form method="post" id="categoria_form">
+          {% csrf_token %} {{ form.as_p}}
+          <button class="btn btn-primary" type="submit">Agregar</button>
+        </form>
+      </div>
+      <div class="col-6">
+        <br>
+        <h1>Lista de Categorias</h1>
+        <div id="categorias">
+        </div>
+      </div>
+    </div>
+    <script>
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        document.getElementById('categoria_form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            fetch('/categorias/api/guardar/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                cargarCategorias(); // Recargar la lista de categorías
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function cargarCategorias(){
+            fetch('/categorias/json')
+            .then(response => response.json())
+            .then(data => {
+                let div = document.getElementById('categorias');
+                div.innerHTML = '';
+                data.forEach(categoria => {
+                    div.innerHTML += `
+                    <p><strong>${categoria.nombre}</strong>
+                      <img src="${categoria.imagen}" width="100" />
+                    </p>
+                    `                    
+                });
+            })
+            .catch(error => console.error('Error:', error))
+        }
+        cargarCategorias();
+    </script>
+  </body>
+</html>

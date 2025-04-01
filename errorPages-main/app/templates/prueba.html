@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input type="text" name="nombre" placeholder="ingrese nombre"> </input>
+        <input type="text" name="edad" placeholder="ingrese edad"> </input>
+        <button type="submit">Enviar...</button>
+    </form>
+    
+    {% if objeto %}
+    
+    <!-- Todo lo que esta aqui se va a pintar -->
+
+    <h1>{{ saludo }}</h1>
+    <h2>{{ objeto.nombres }}</h2>
+    <h2>{{ objeto.descripcion }}</h2>
+
+    {% endif %}
+    {% if personas %}
+        <ul>
+            {% for persona in personas %}
+                <li>{{persona.nombre}}</li>
+        </ul>
+            {%endfor%}
+    {% endif %}
+</body>
+</html>
